@@ -18,7 +18,7 @@ fi
 GIT=`pwd`
 
 # Go to svn
-cd ../svn-wordpress-github/trunk
+cd ../broadstreet-adwidget-svn/trunk
 SVN=`pwd`
 
 # Update the code
