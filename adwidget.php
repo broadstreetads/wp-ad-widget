@@ -46,7 +46,7 @@ class AdWidget_Core
      */
     public static function getBaseURL()
     {   
-        return (get_bloginfo('url') . '/wp-content/plugins/adwidget/');
+        return (get_bloginfo('url') . '/wp-content/plugins/ad-widget/');
     }
     
     /**
