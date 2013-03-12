@@ -112,7 +112,6 @@ class AdWidget_Core
             }
             else
             {
-                self::flushRewrites(true);
                 self::sendReport("Upgrade");
                 self::setOption($upgrade_key, 'true');
             }
@@ -133,7 +132,7 @@ class AdWidget_Core
         else
         {
             $deprecated = ' ';
-            $autoload   = 'no';
+            $autoload   = 'yes';
             add_option($name, $value, $deprecated, $autoload);
         }
     }
