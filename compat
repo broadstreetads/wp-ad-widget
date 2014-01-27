@@ -1,0 +1,10 @@
+#!/usr/bin/php
+<?php
+
+$version = `curl -s http://wordpress.org/download/ | egrep -o 'Download.*\d+\.\d+\.\d+' | egrep -o '\d+\.\d+\.\d+'`;
+$version = trim($version);
+
+$readme = file_get_contents('wp-readme.txt');
+$readme = preg_replace('/Tested up to: \d+\.\d+\.\d+/', "Tested up to: $version", $readme);
+
+file_put_contents('wp-readme.txt', $readme);

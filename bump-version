@@ -16,5 +16,7 @@ NEW=`echo $2 | sed 's/\./\\\./g'`
 sed -i.bak "s/$OLD/$NEW/g" 'wp-readme.txt'
 sed -i.bak "s/$OLD/$NEW/g" 'adwidget.php'
 
+./compat
+
 rm wp-readme.txt.bak
 rm adwidget.php.bak
