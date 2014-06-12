@@ -323,7 +323,7 @@ class AdWidget_ImageWidget extends WP_Widget
         }
         
         # There's a reason for this dumb condition
-        if($new == 'yes' || $new == '')
+        if($new == 'yes')
         {
             $target = 'target="_blank"';            
         }
