@@ -42,7 +42,10 @@ the Wordpress support forums because they're awful.
 
 == Installation ==
 
-There aren't any special instructions for installing this plug-in. Once
+First: Turn off any ad blockers you might have installed. They prevent
+ads from appearing!
+
+Other than that, there aren't any special instructions for installing this plug-in. Once
 installed, go to Appearance -> Widgets, and look for the "Ad Widget" widgets!
 
 You can also go to Settings -> Ad Widget for a video demo on how to use it.
