@@ -29,6 +29,17 @@ You will not find an easier way to run ads on your website!
 
 Watch a short video demo: http://www.screenr.com/u0t7
 
+== Troubleshooting ==
+
+The Ad Widget is a very simple plugin. If you are having trouble
+loading ads on your site, please make sure that:
+
+* You do not have an ad blocker installed (you would be amazed how often this happens). Disable it and refresh the page a few times to see if the ad appears.
+* You don't have CSS in your theme which is hiding images (rare, but it happens)
+
+If you have any other trouble, email kenny@broadstreetads.com - try to avoid
+the Wordpress support forums because they're awful.
+
 == Installation ==
 
 There aren't any special instructions for installing this plug-in. Once
