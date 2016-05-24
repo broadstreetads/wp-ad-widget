@@ -3,7 +3,7 @@
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.9.0
+Version: 2.10.0
 Author: Broadstreet Ads
 Author URI: http://broadstreetads.com
 */
@@ -21,7 +21,7 @@ add_action('admin_footer', array('AdWidget_Core', 'footerScripts'));
 class AdWidget_Core
 {
     CONST KEY_INSTALL_REPORT = 'AdWidget_Installed';
-    CONST VERSION = '2.9.0';
+    CONST VERSION = '2.10.0';
     CONST KEY_WELCOME = 'AdWidget_Welcome';
     
     /**
@@ -221,10 +221,10 @@ class AdWidget_HTMLWidget extends WP_Widget
     /**
      * Set the widget options
      */
-     function AdWidget_HTMLWidget()
+     function __construct()
      {
         $widget_ops = array('classname' => 'AdWidget_HTMLWidget', 'description' => 'Place an ad code like Google ads or other ad provider');
-        $this->WP_Widget('AdWidget_HTMLWidget', 'Ad: HTML/Javascript Ad', $widget_ops);
+         parent::__construct('AdWidget_HTMLWidget', 'Ad: HTML/Javascript Ad', $widget_ops);
      }
 
      /**
@@ -321,7 +321,7 @@ class AdWidget_ImageWidget extends WP_Widget
      function AdWidget_ImageWidget()
      {
         $widget_ops = array('classname' => 'AdWidget_ImageWidget', 'description' => 'Place an image ad with a link');
-        $this->WP_Widget('AdWidget_ImageWidget', 'Ad: Image/Banner Ad', $widget_ops);
+        parent::__construct('AdWidget_ImageWidget', 'Ad: Image/Banner Ad', $widget_ops);
      }
 
      /**
