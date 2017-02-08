@@ -2,3 +2,4 @@ php_errors*
 compat
 /nbproject/private/
 /nbproject
+.idea/*
