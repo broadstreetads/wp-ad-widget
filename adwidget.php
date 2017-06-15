@@ -3,8 +3,8 @@
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.12.0
-Author: Broadstreet Ads
+Version: 2.13.0
+Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
 
@@ -13,7 +13,6 @@ require_once 'lib/Utility.php';
 add_action('admin_init', array('AdWidget_Core', 'registerScripts'));
 add_action('widgets_init', array('AdWidget_Core', 'registerWidgets'));
 add_action('admin_menu', array('AdWidget_Core', 'registerAdmin'));
-add_action('admin_footer', array('AdWidget_Core', 'footerScripts'));
 
 /**
  * This class is the core of Ad Widget
@@ -21,7 +20,7 @@ add_action('admin_footer', array('AdWidget_Core', 'footerScripts'));
 class AdWidget_Core
 {
     CONST KEY_INSTALL_REPORT = 'AdWidget_Installed';
-    CONST VERSION = '2.12.0';
+    CONST VERSION = '2.13.0';
     CONST KEY_WELCOME = 'AdWidget_Welcome';
     
     /**
@@ -118,31 +117,6 @@ class AdWidget_Core
             
             @wp_mail($email, $subject, $body);
         }
-    }
-    
-    public static function footerScripts() 
-    {
-        if(is_admin()): ?>
-
-            <script>(function() {
-              var _fbq = window._fbq || (window._fbq = []);
-              if (!_fbq.loaded) {
-                var fbds = document.createElement('script');
-                fbds.async = true;
-                fbds.src = '//connect.facebook.net/en_US/fbds.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(fbds, s);
-                _fbq.loaded = true;
-              }
-              _fbq.push(['addPixelId', '770762566324001']);
-            })();
-            window._fbq = window._fbq || [];
-            window._fbq.push(['track', 'PixelInitialized', {}]);
-            </script>
-            <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=770762566324001&amp;ev=PixelInitialized" /></noscript>
-
-    <?php endif; 
-    
     }
 
     /**
