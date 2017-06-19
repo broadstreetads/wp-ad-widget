@@ -98,21 +98,6 @@ class Broadstreet_Adwidget_Mini_Utility
     }
     
     /**
-     * Send an email about an error, issue, etc
-     */
-    public static function sendReport($message = 'General')
-    {
-        $report = "";
-        $report .= bsadwidget_get_website_name(). "\n";
-        $report .= bsadwidget_get_website(). "\n";
-        $report .= bsadwidget_get_email(). "\n";
-        $report .= 'Platform Version: ' . bsadwidget_get_platform_version() . "\n";
-        $report .= "$message\n";
-
-        @bsadwidget_mail('errors@broadstreetads.com', "Status Report: WP AdWidget", $report);
-    }
-    
-    /**
      * Get a link to the Broadstreet interface
      * @param string $path
      * @return string
@@ -181,7 +166,6 @@ class Broadstreet_Adwidget_Mini_Utility
             self::setOption (Broadstreet_Adwidget_Mini_Utility::KEY_ADSERVER_ENABLED, (bool)$enabled);
             $message = $enabled ? 'Subscribed' : 'Unsubscribed';
             if($enabled) $success = self::importOldAds($email);
-            if($success) self::sendReport("Premium Adserver $message");
             return $success;
         } else {
             return (bool)self::getOption(self::KEY_ADSERVER_ENABLED, false);
@@ -317,7 +301,6 @@ class Broadstreet_Adwidget_Mini_Utility
                 return $api->updateAdvertisement($network_id, $advertiser_id, $advertisement_id, $params);
             
         } catch(Exception $ex) {
-            self::sendReport($ex->__toString());
             exit($ex->__toString());
             return false;
         }
@@ -343,7 +326,6 @@ class Broadstreet_Adwidget_Mini_Utility
                 return $api->updateAdvertisement($network_id, $advertiser_id, $advertisement_id, $params);
             
         } catch(Exception $ex) {
-            self::sendReport($ex->__toString());
             exit($ex->__toString());
             return false;
         }
@@ -422,7 +404,6 @@ class Broadstreet_Adwidget_Mini_Utility
         }
         catch(Exception $ex)
         {
-            self::sendReport($ex->__toString());
             return false;
         }
         

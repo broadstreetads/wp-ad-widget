@@ -68,8 +68,7 @@ class AdWidget_Core
      */
     static function adminMenuCallback()
     {
-        self::sendInstallReportIfNew();
-        
+
         if(isset($_POST['cancel']))
             Broadstreet_Adwidget_Mini_Utility::hasAdserving(false);
         
@@ -77,79 +76,6 @@ class AdWidget_Core
             Broadstreet_Adwidget_Mini_Utility::hasAdserving(true);
         
         include dirname(__FILE__) . '/views/admin.php';
-    }
-    
-    /**
-     * Makes a call to the Broadstreet service to collect information information
-     *  on the blog in case of errors and other needs.
-     */
-    public static function sendReport($message = 'General')
-    {        
-        $report = "$message\n";
-        $report .= get_bloginfo('name'). "\n";
-        $report .= get_bloginfo('url'). "\n";
-        $report .= get_bloginfo('admin_email'). "\n";
-        $report .= 'WP Version: ' . get_bloginfo('version'). "\n";
-        $report .= 'Plugin Version: ' . self::VERSION . "\n";
-        $report .= "$message\n";
-
-        @wp_mail('plugin@broadstreetads.com', "Report: $message", $report);
-    }
-    
-    /**
-     * Send a welcome email to the user
-     */
-    public static function sendWelcome()
-    {
-        $got_welcome = self::getOption(self::KEY_WELCOME);
-        
-        if($got_welcome != 'true') {
-            $email   = get_bloginfo('admin_email');
-            $subject = "Welcome - Ad Widget/Broadstreet XPRESS";
-
-            $body = "Thank you for choosing Wordpress AdWidget! This is a one-time email. If you have any support questions, reach out to frontdesk@broadstreetads.com.\n\n"
-                    . "You may wish to check out our extensive ad format gallery and full-service adserver: http://broadstreetads.com/ad-widget/\n\n"
-                    . "It helps to approach your sales prospects with something they've never seen before. We offer personal, 15 minute demos.\n\n"
-                    . "Best of luck!\n\n"
-                    . "- Kenny Katzgrau (Broadstreet XPRESS)\n\n";
-
-            self::setOption(self::KEY_WELCOME, 'true');
-            
-            @wp_mail($email, $subject, $body);
-        }
-    }
-
-    /**
-     * If this is a new installation and we've never sent a report to the
-     * Broadstreet server, send a packet of basic info about this blog in case
-     * issues should arise in the future.
-     */
-    public static function sendInstallReportIfNew()
-    {        
-        $install_key = self::KEY_INSTALL_REPORT;
-        $upgrade_key = self::KEY_INSTALL_REPORT .'_'. self::VERSION;
-        
-        $installed = self::getOption($install_key);
-        $upgraded  = self::getOption($upgrade_key);
- 
-        $sent = ($installed && $upgraded);        
-        
-        if($sent === FALSE)
-        {            
-            if(!$installed)
-            {
-                self::sendWelcome();
-                self::sendReport("Installation");
-                self::setOption($install_key, 'true');
-                self::setOption($upgrade_key, 'true');
-            }
-            else
-            {
-                self::sendWelcome();
-                self::sendReport("Upgrade");
-                self::setOption($upgrade_key, 'true');
-            }
-        }
     }
     
     /**
