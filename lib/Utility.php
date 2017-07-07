@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 require 'Broadstreet.php';
 
 if(!class_exists('Broadstreet_Mini_Utility')):

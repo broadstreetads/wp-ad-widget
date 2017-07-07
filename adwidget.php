@@ -1,9 +1,11 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /*
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.14.0
+Version: 2.15.0
 Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
@@ -20,7 +22,7 @@ add_action('admin_menu', array('AdWidget_Core', 'registerAdmin'));
 class AdWidget_Core
 {
     CONST KEY_INSTALL_REPORT = 'AdWidget_Installed';
-    CONST VERSION = '2.14.0';
+    CONST VERSION = '2.15.0';
     CONST KEY_WELCOME = 'AdWidget_Welcome';
     
     /**
@@ -262,7 +264,7 @@ class AdWidget_ImageWidget extends WP_Widget
         if(!$img)
         {
             $img  = AdWidget_Core::getBaseURL() . 'assets/sample-ad.png';
-            $link = 'http://adsofthefuture.com';
+            $link = '#';
         }
         
         if(Broadstreet_Adwidget_Mini_Utility::hasAdserving() && is_numeric($instance['bs_ad_id']))
@@ -376,42 +378,6 @@ class AdWidget_ImageWidget extends WP_Widget
        <p>
            <span style="color: green; font-weight: bold;">Tip:</span> If you're using this widget, you might also find <a target="_blank" href="http://broadstreetads.com/ad-platform/ad-formats/">our special ad formats for sales people and publishers</a> useful.
        </p>
-       <?php if(!Broadstreet_Adwidget_Mini_Utility::hasAdserving()): ?>
-        <p>
-            When you're ready for a more powerful adserver with click reporting <a target="_blank" href="#" onclick="broadstreet_upgrade(); return false;">click here</a>.
-            <script language="javascript">
-                if(!window.broadstreet_upgrade)
-                {
-                    function broadstreet_upgrade()
-                    {
-                        window.send_to_editor = function(html) {
-                            tb_remove();
-                            alert('Save any unsaved widgets and refresh this page to see new upgraded options');
-                        };
-
-                        tb_show('Broadstreet', '<?php echo bsadwidget_get_base_url('views/modal/') ?>' + '?fake=fake&width=650&height=580&TB_iframe=true');
-                    }
-                }
-            </script>
-        </p>
-        <?php elseif(isset($instance['bs_ad_id'])): ?>
-        <p>
-            Reporting: <a target="_blank" href="#" onclick="broadstreet_reports(); return false;">View stats for clicks and views</a>
-            <script language="javascript">
-                if(!window.broadstreet_reports)
-                {
-                    function broadstreet_reports()
-                    {
-                        window.send_to_editor = function(html) {
-                            tb_remove();
-                        };
-
-                        tb_show('Broadstreet', '<?php echo bsadwidget_get_base_url('views/modal/?step=reports&adv_id=' . @$instance['bs_adv_id'] . '&ad_id=' . @$instance['bs_ad_id']) ?>' + '&width=650&height=580&TB_iframe=true');
-                    }
-                }
-            </script>
-        </p>
-        <?php endif; ?>
         </div>
        <?php
      }
