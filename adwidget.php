@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.15.0
+Version: 2.16.0
 Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
@@ -22,7 +22,7 @@ add_action('admin_menu', array('AdWidget_Core', 'registerAdmin'));
 class AdWidget_Core
 {
     CONST KEY_INSTALL_REPORT = 'AdWidget_Installed';
-    CONST VERSION = '2.15.0';
+    CONST VERSION = '2.16.0';
     CONST KEY_WELCOME = 'AdWidget_Welcome';
     
     /**
@@ -376,7 +376,7 @@ class AdWidget_ImageWidget extends WP_Widget
            <input type="checkbox" name="<?php echo $this->get_field_name('w_new'); ?>" value="yes"  <?php if($instance['w_new'] == 'yes') echo 'checked'; ?> />
        </p>
        <p>
-           <span style="color: green; font-weight: bold;">Tip:</span> If you're using this widget, you might also find <a target="_blank" href="http://broadstreetads.com/ad-platform/ad-formats/">our special ad formats for sales people and publishers</a> useful.
+           <span style="color: green; font-weight: bold;">Tip:</span> If you're using this widget, you might also find <a target="_blank" href="https://information.broadstreetads.com/category/ad-formats/">our special ad formats for sales people and publishers</a> useful.
        </p>
         </div>
        <?php

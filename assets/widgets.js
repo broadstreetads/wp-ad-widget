@@ -12,7 +12,9 @@ jQuery(function($) {
         imgurl = $('img',html).attr('src');
         if(!imgurl) imgurl = $(html).attr('src');
 
-        $('#' + window.adcode_id).val(imgurl);
+        var el = $('#' + window.adcode_id);
+        el.val(imgurl);
+        el.parents('form').first().trigger('change');
 
         tb_remove();
     };
