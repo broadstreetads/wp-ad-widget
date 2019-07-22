@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.16.0
+Version: 2.17.0
 Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
@@ -24,7 +24,7 @@ class AdWidget_Core
     CONST KEY_INSTALL_REPORT = 'AdWidget_Installed';
     CONST VERSION = '2.16.0';
     CONST KEY_WELCOME = 'AdWidget_Welcome';
-    
+
     /**
      * The callback used to register the scripts
      */
@@ -38,25 +38,25 @@ class AdWidget_Core
             wp_enqueue_script('adwidget-main',  self::getBaseURL().'assets/widgets.js');
         }
     }
-    
+
     /**
      * The callback used to register the widget
      */
     static function registerWidgets()
-    {       
+    {
         register_widget('AdWidget_HTMLWidget');
         register_widget('AdWidget_ImageWidget');
     }
-    
+
     /**
      * Get the base URL of the plugin installation
      * @return string the base URL
      */
     public static function getBaseURL()
-    {   
+    {
         return plugin_dir_url(__FILE__);
     }
-    
+
     /**
      * Register the admin settings page
      */
@@ -73,13 +73,13 @@ class AdWidget_Core
 
         if(isset($_POST['cancel']))
             Broadstreet_Adwidget_Mini_Utility::hasAdserving(false);
-        
+
         if(isset($_POST['subscribe']))
             Broadstreet_Adwidget_Mini_Utility::hasAdserving(true);
-        
+
         include dirname(__FILE__) . '/views/admin.php';
     }
-    
+
     /**
      * Sets a Wordpress option
      * @param string $name The name of the option to set
@@ -138,7 +138,7 @@ class AdWidget_HTMLWidget extends WP_Widget
          extract($args);
 
          echo $before_widget;
-         
+
          echo "<div style='text-align: center;'>{$instance['w_adcode']}</div>";
 
          echo $after_widget;
@@ -153,26 +153,26 @@ class AdWidget_HTMLWidget extends WP_Widget
      function update($new_instance, $old_instance)
      {
         $instance = $old_instance;
-        
+
         $instance['w_adcode'] = $new_instance['w_adcode'];
         $instance['w_adv']    = $new_instance['w_adv'];
-        
+
         /* New ad? Upload it to Broadstreet */
         if($instance['w_adcode'] && Broadstreet_Adwidget_Mini_Utility::hasAdserving()) {
-            
+
             $advertisement_id = false;
             # New ad?
             if(is_numeric(@$instance['bs_ad_id'])) $advertisement_id = $instance['bs_ad_id'];
-            
+
             # New advertiser?
             if(!$advertisement_id) {
                 $api = Broadstreet_Adwidget_Mini_Utility::getClient();
                 $adv = $api->createAdvertiser(Broadstreet_Adwidget_Mini_Utility::getNetworkID(), $instance['w_adv']);
                 $instance['bs_adv_id'] = $adv->id;
             }
-                
-            $ad = Broadstreet_Adwidget_Mini_Utility::importHTMLAd(Broadstreet_Adwidget_Mini_Utility::getNetworkID(), 
-                    $instance['bs_adv_id'], 
+
+            $ad = Broadstreet_Adwidget_Mini_Utility::importHTMLAd(Broadstreet_Adwidget_Mini_Utility::getNetworkID(),
+                    $instance['bs_adv_id'],
                     $instance['w_adcode'],
                     $advertisement_id);
 
@@ -190,7 +190,7 @@ class AdWidget_HTMLWidget extends WP_Widget
       * Display the widget update form
       * @param array $instance
       */
-     function form($instance) 
+     function form($instance)
      {
 
         $defaults = array('w_adcode' => '', 'w_adv' => 'New Advertiser');
@@ -210,7 +210,7 @@ class AdWidget_HTMLWidget extends WP_Widget
        <?php
      }
 }
-     
+
 /**
  * This is an optional widget to display GitHub projects
  */
@@ -233,13 +233,13 @@ class AdWidget_ImageWidget extends WP_Widget
      function widget($args, $instance)
      {
         extract($args);
-         
+
         $link   = @$instance['w_link'];
         $img    = @$instance['w_img'];
         $resize = @$instance['w_resize'];
         $new    = @$instance['w_new'];
         $id     = rand(1, 100000);
-        
+
         if($resize == 'yes')
         {
             $resize_s = "style='width: 100%;'";
@@ -248,25 +248,25 @@ class AdWidget_ImageWidget extends WP_Widget
         {
             $resize_s = '';
         }
-        
+
         # There's a reason for this dumb condition
         if($new == 'yes')
         {
-            $target = 'target="_blank"';            
+            $target = 'target="_blank"';
         }
         else
         {
             $target = '';
         }
-        
+
         echo $before_widget;
-        
+
         if(!$img)
         {
             $img  = AdWidget_Core::getBaseURL() . 'assets/sample-ad.png';
             $link = '#';
         }
-        
+
         if(Broadstreet_Adwidget_Mini_Utility::hasAdserving() && is_numeric($instance['bs_ad_id']))
         {
             if($resize == 'yes') echo '<style type="text/css">.adwidget-id'.$id.' img { width: 100% !important; height: auto !important; }</style>';
@@ -289,8 +289,8 @@ class AdWidget_ImageWidget extends WP_Widget
      function update($new_instance, $old_instance)
      {
         $instance = $old_instance;
-        
-        $changed = ($instance['w_img'] != $new_instance['w_img'] 
+
+        $changed = ($instance['w_img'] != $new_instance['w_img']
                     || $instance['w_link'] !== $new_instance['w_link']);
 
         $instance['w_link']    = $new_instance['w_link'];
@@ -298,24 +298,24 @@ class AdWidget_ImageWidget extends WP_Widget
         $instance['w_resize']  = @$new_instance['w_resize'];
         $instance['w_new']     = @$new_instance['w_new'];
         $instance['w_adv']     = $new_instance['w_adv'];
-        
+
         /* New ad? Upload it to Broadstreet */
         if($instance['w_img'] && $changed && Broadstreet_Adwidget_Mini_Utility::hasAdserving()) {
-            
+
             $advertisement_id = false;
             # New ad?
             if(is_numeric(@$instance['bs_ad_id'])) $advertisement_id = $instance['bs_ad_id'];
-            
+
             # New advertiser?
             if(!$advertisement_id) {
                 $api = Broadstreet_Adwidget_Mini_Utility::getClient();
                 $adv = $api->createAdvertiser(Broadstreet_Adwidget_Mini_Utility::getNetworkID(), $instance['w_adv']);
                 $instance['bs_adv_id'] = $adv->id;
             }
-                
-            $ad = Broadstreet_Adwidget_Mini_Utility::importImageAd(Broadstreet_Adwidget_Mini_Utility::getNetworkID(), 
-                    $instance['bs_adv_id'], 
-                    $instance['w_img'], 
+
+            $ad = Broadstreet_Adwidget_Mini_Utility::importImageAd(Broadstreet_Adwidget_Mini_Utility::getNetworkID(),
+                    $instance['bs_adv_id'],
+                    $instance['w_img'],
                     $instance['w_link'],
                     $advertisement_id);
 
@@ -333,15 +333,15 @@ class AdWidget_ImageWidget extends WP_Widget
       * Display the widget update form
       * @param array $instance
       */
-     function form($instance) 
+     function form($instance)
      {
         $link_id = $this->get_field_id('w_link');
         $img_id = $this->get_field_id('w_img');
-        
+
         $defaults = array('w_link' => get_bloginfo('url'), 'w_img' => '', 'w_adv' => 'New Advertiser', 'w_resize' => 'no', 'w_new' => 'no');
-        
+
 		$instance = wp_parse_args((array) $instance, $defaults);
-        
+
         $img  = $instance['w_img'];
         $link = $instance['w_link'];
         $adv  = $instance['w_adv'];
@@ -355,10 +355,10 @@ class AdWidget_ImageWidget extends WP_Widget
                 <div class="bs-proof"><img style="width:100%;" src="<?php echo $instance['w_img'] ?>" alt="Ad" /></div><br/>
            <?php endif; ?>
            <a href="#" class="upload-button" rel="<?php echo $img_id ?>">Click here to upload a new image.</a> You can also paste in an image URL below.
-           
+
        </p>
        <input class="widefat tag" placeholder="Image URL" type="text" id="<?php echo $img_id; ?>" name="<?php echo $this->get_field_name('w_img'); ?>" value="<?php echo htmlentities($instance['w_img']); ?>" />
-       <br/><br/> 
+       <br/><br/>
        <p>
             <label for="<?php echo $this->get_field_id('w_link'); ?>">Ad Click Destination:</label><br/>
             <input class="widefat" type="text" id="<?php echo $this->get_field_id('w_link'); ?>" name="<?php echo $this->get_field_name('w_link'); ?>" value="<?php echo $instance['w_link']; ?>" />
