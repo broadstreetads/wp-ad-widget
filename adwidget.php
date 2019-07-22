@@ -219,7 +219,7 @@ class AdWidget_ImageWidget extends WP_Widget
     /**
      * Set the widget options
      */
-     function AdWidget_ImageWidget()
+     function __construct()
      {
         $widget_ops = array('classname' => 'AdWidget_ImageWidget', 'description' => 'Place an image ad with a link');
         parent::__construct('AdWidget_ImageWidget', 'Ad: Image/Banner Ad', $widget_ops);
