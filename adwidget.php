@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Plugin Name: Wordpress Ad Widget
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.17.0
+Version: 2.18.0
 Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
@@ -46,6 +46,7 @@ class AdWidget_Core
     {
         register_widget('AdWidget_HTMLWidget');
         register_widget('AdWidget_ImageWidget');
+        register_widget('AdWidget_ParkaveWidget');
     }
 
     /**
@@ -110,6 +111,16 @@ class AdWidget_Core
         $value = get_option($name);
         if( $value !== FALSE ) return $value;
         return $default;
+    }
+
+    public static function getParkaveWidgetButton($widget, $just_button = false)
+    {
+        if ($just_button) {
+            return '<div style="text-align: center;" id="' . $widget->get_field_id('w_parkave_button') . '"></div><p><a href="https://www.youtube.com/watch?v=QBTH4aF9vJ0&feature=emb_title" target="_blank">Learn more about ParkAve for news and magazine publishers.</a></p>';
+        } else {
+            return '<div style="background-color: #f7f7f7; border-radius: 4px; padding: 5px 10px; margin-bottom: 10px;"><p><strong>Impress advertising prospects with amazing banner styles.</strong> Click below to use it right here, for free. <a href="https://www.youtube.com/watch?v=QBTH4aF9vJ0&feature=emb_title" target="_blank">Watch a video explainer.</a></p><div style="text-align: center;" id="' . $widget->get_field_id('w_parkave_button') . '"></div><p>After creating a ParkAve ad, be sure to click "Save." below.</p></div>';
+        }
+
     }
 }
 
@@ -206,9 +217,101 @@ class AdWidget_HTMLWidget extends WP_Widget
             <label for="<?php echo $this->get_field_id('w_adv'); ?>">Advertiser Name</label>
             <input class="widefat" type="text" id="<?php echo $this->get_field_id('w_adv'); ?>" name="<?php echo $this->get_field_name('w_adv'); ?>" value="<?php echo $instance['w_adv']; ?>" />
        </p>
+
+        <?php echo AdWidget_Core::getParkaveWidgetButton($this) ?>
+
         </div>
        <?php
      }
+}
+
+class AdWidget_ParkaveWidget extends WP_Widget {
+    /**
+     * Set the widget options
+     */
+    function __construct()
+    {
+       $widget_ops = array('classname' => 'AdWidget_ParkaveWidget', 'description' => 'For news and magazine publishers');
+        parent::__construct('AdWidget_ParkaveWidget', 'Ad: ParkAve for News and Magazines', $widget_ops);
+    }
+
+
+     /**
+      * Display the widget on the sidebar
+      * @param array $args
+      * @param array $instance
+      */
+      function widget($args, $instance)
+      {
+          extract($args);
+
+          echo $before_widget;
+
+          echo "<div style='text-align: center;'>{$instance['w_adcode']}</div>";
+
+          echo $after_widget;
+      }
+
+      /**
+       * Update the widget info from the admin panel
+       * @param array $new_instance
+       * @param array $old_instance
+       * @return array
+       */
+      function update($new_instance, $old_instance)
+      {
+         $instance = $old_instance;
+
+         $instance['w_adcode'] = $new_instance['w_adcode'];
+         $instance['w_adv']    = $new_instance['w_adv'];
+
+         /* New ad? Upload it to Broadstreet */
+         if($instance['w_adcode'] && Broadstreet_Adwidget_Mini_Utility::hasAdserving()) {
+
+             $advertisement_id = false;
+             # New ad?
+             if(is_numeric(@$instance['bs_ad_id'])) $advertisement_id = $instance['bs_ad_id'];
+
+             # New advertiser?
+             if(!$advertisement_id) {
+                 $api = Broadstreet_Adwidget_Mini_Utility::getClient();
+                 $adv = $api->createAdvertiser(Broadstreet_Adwidget_Mini_Utility::getNetworkID(), $instance['w_adv']);
+                 $instance['bs_adv_id'] = $adv->id;
+             }
+
+             $ad = Broadstreet_Adwidget_Mini_Utility::importHTMLAd(Broadstreet_Adwidget_Mini_Utility::getNetworkID(),
+                     $instance['bs_adv_id'],
+                     $instance['w_adcode'],
+                     $advertisement_id);
+
+             if(!$advertisement_id) {
+                 $instance['bs_ad_html'] = $ad->html;
+                 $instance['bs_ad_id']   = $ad->id;
+                 $instance['bs_adv_id']  = $adv->id;
+             }
+         }
+
+         return $instance;
+      }
+
+     /**
+      * Display the widget update form
+      * @param array $instance
+      */
+      function form($instance)
+      {
+         $defaults = array('w_adcode' => '', 'w_adv' => 'New Advertiser');
+         $instance = wp_parse_args((array) $instance, $defaults);
+        ?>
+        <div class="widget-content">
+        <p>
+             <label for="<?php echo $this->get_field_id('w_adcode'); ?>">Click the ParkAve button below to fill this box with the appropriate code</label>
+             <textarea style="height: 100px;" class="widefat" id="<?php echo $this->get_field_id( 'w_adcode' ); ?>" name="<?php echo $this->get_field_name('w_adcode'); ?>"><?php echo $instance['w_adcode']; ?></textarea>
+        </p>
+        <?php echo AdWidget_Core::getParkaveWidgetButton($this, true) ?>
+         </div>
+        <?php
+      }
 }
 
 /**
@@ -376,7 +479,7 @@ class AdWidget_ImageWidget extends WP_Widget
            <input type="checkbox" name="<?php echo $this->get_field_name('w_new'); ?>" value="yes"  <?php if($instance['w_new'] == 'yes') echo 'checked'; ?> />
        </p>
        <p>
-           <span style="color: green; font-weight: bold;">Tip:</span> If you're using this widget, you might also find <a target="_blank" href="https://information.broadstreetads.com/category/ad-formats/">our special ad formats for sales people and publishers</a> useful.
+           <span style="color: green; font-weight: bold;">Tip:</span> If you're using this widget, you might also find the <strong>Ad: ParkAve</strong> widget useful for easy-to-create banner styles.
        </p>
         </div>
        <?php

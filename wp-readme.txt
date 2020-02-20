@@ -2,8 +2,8 @@
 Contributors: Broadstreet
 Tags: wordpress,ad,widget,sidebar,google,tag,code
 Requires at least: 3.0
-Tested up to: 5.1
-Stable tag: 2.17.0
+Tested up to: 5.3
+Stable tag: 2.18.0
 
 Easily upload ad images and ad code to your sidebar. For those that don't need or
 want a complicated ad management system.
@@ -13,7 +13,9 @@ want a complicated ad management system.
 This is the easiest way to place ads in your Wordpress site. Just drag a widget
 to the sidebar, upload, an ad, and save.
 
-Watch a short video demo: http://www.screenr.com/u0t7
+Watch a short video demo: https://youtu.be/E9CC3ZWOaLU
+
+Note: If you have an adblocker installed, it will prevent this widget (and parts of Wordpress) from working properly.
 
 * Extremely intuitive for beginners
 * No clunky ad management interface
@@ -27,7 +29,7 @@ You will not find an easier way to run ads on your website!
 
 == Demo ==
 
-Watch a short video demo: http://www.screenr.com/u0t7
+Watch a short video demo: https://youtu.be/E9CC3ZWOaLU
 
 == Troubleshooting ==
 
@@ -49,5 +51,3 @@ Other than that, there aren't any special instructions for installing this plug-
 installed, go to Appearance -> Widgets, and look for the "Ad Widget" widgets!
 
 You can also go to Settings -> Ad Widget for a video demo on how to use it.
-
-Also, think about trying [Selfie](http://wordpress.org/plugins/selfie).

@@ -9,12 +9,13 @@
 <p>Thank you for using our plugin! This plugin was built by <a href="http://broadstreetads.com">Broadstreet</a>, the
 company for independent publishers.</p>
 
-<p>To put an ad on your website, just go to <a href="widgets.php">the widgets page</a>, 
+<p>To put an ad on your website, just go to <a href="widgets.php">the widgets page</a>,
     and look for:</p>
 
 <ul>
     <li><strong>Ad: HTML/Javascript Ad</strong></li>
     <li><strong>Ad: Image/Banner Ad</strong></li>
+    <li><strong>Ad: ParkAve for News and Magazines</strong></li>
 </ul>
 
 <p>
@@ -26,14 +27,14 @@ instructions! Send questions to kenny@broadstreetads.com .
 Here's a short instructional video if you need help:
 </p>
 
-<iframe src="http://www.screenr.com/embed/u0t7" width="550" height="396" frameborder="0"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/E9CC3ZWOaLU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </div>
 
 <div>
     <div class="fb-like" data-href="http://www.facebook.com/broadstreetads" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true"></div>
     <a href="https://twitter.com/broadstreetads" class="twitter-follow-button" data-show-count="false">Follow @broadstreetads</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
 
 <h2>The Streetlight</h2>
