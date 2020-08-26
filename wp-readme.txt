@@ -2,8 +2,8 @@
 Contributors: Broadstreet
 Tags: wordpress,ad,widget,sidebar,google,tag,code
 Requires at least: 3.0
-Tested up to: 5.3
-Stable tag: 2.18.0
+Tested up to: 5.5
+Stable tag: 2.19.0
 
 Easily upload ad images and ad code to your sidebar. For those that don't need or
 want a complicated ad management system.

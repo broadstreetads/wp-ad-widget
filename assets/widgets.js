@@ -26,7 +26,7 @@ jQuery(function($) {
 
     }, 1000);
 
-    $('.upload-button').live('click', function(e) {
+    $('#widgets-right').on('click', '.upload-button', function(e) {
         window.adcode_id      = $(e.target).attr('rel');
         window.send_to_editor = image_upload_handler;
 
