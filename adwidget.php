@@ -2,10 +2,10 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /*
-Plugin Name: Wordpress Ad Widget
+Plugin Name: Ad Widget for Wordpress
 Plugin URI: https://github.com/broadstreetads/wordpress-ad-widget
 Description: The easiest way to place ads in your Wordpress sidebar. Go to Settings -> Ad Widget
-Version: 2.20.0
+Version: 2.20.1
 Author: Broadstreet XPRESS
 Author URI: http://broadstreetads.com
 */
