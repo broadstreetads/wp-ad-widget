@@ -1,6 +1,6 @@
 <div style="float: left; width: 550px;">
 
-<h1>Wordpress Ad Widget</h1>
+<h1>Ad Widget for Wordpress</h1>
 <script src="https://broadstreet-common.s3.amazonaws.com/broadstreet-net/init.js"></script>
 <script type="text/javascript" src="http://cdn.broadstreetads.com/init.js"></script>
 
